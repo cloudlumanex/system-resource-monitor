@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: system-resource-monitor
+  labels:
+    app: system-resource-monitor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: system-resource-monitor
+  template:
+    metadata:
+      labels:
+        app: system-resource-monitor
+    spec:
+      containers:
+        - name: system-resource-monitor
+          image: 941377151096.dkr.ecr.eu-west-1.amazonaws.com/system-resource-monitor:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
