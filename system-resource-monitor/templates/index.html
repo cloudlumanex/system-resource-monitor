@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Resource Monitor</title>
+    <meta http-equiv="refresh" content="5">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            margin: auto;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Laptop Resource Monitor</h1>
+    <div class="card">
+        <p><strong>CPU Usage:</strong> <span id="cpu"></span>%</p>
+        <p><strong>Memory Usage:</strong> <span id="mem"></span>%</p>
+        <p><strong>Memory Used:</strong> <span id="used"></span> GB</p>
+    </div>
+
+    <script>
+        async function fetchMetrics() {
+            const response = await fetch("/metrics");
+            const data = await response.json();
+
+            document.getElementById("cpu").innerText = data.cpu_usage_percent;
+            document.getElementById("mem").innerText = data.memory_usage_percent;
+            document.getElementById("used").innerText = data.memory_used_gb;
+        }
+
+        fetchMetrics();
+        setInterval(fetchMetrics, 5000);
+    </script>
+</body>
+</html>
